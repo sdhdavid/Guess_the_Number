@@ -3,19 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Number Guessing Game</title>
+    <title>Guess the Number Game</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <main class="game-container">
-        <h1 class="game-title">Number Guessing Game</h1>
-        <p class="game-instruction">Guess the number I chose! (1-100)</p>
-        <div class="game-input-container">
-            <input id="input" type="number" min="1" max="100" placeholder="Enter your guess">
-            <button id="btn">Submit</button>
-        </div>
-        <p id="msg" class="game-message"></p>
-    </main>
-    <script src="index.js"></script>
+    <div id="game-container">
+        <h1>Guess the Number</h1>
+        <p>Guess a number between 1 and 100:</p>
+        <input type="number" id="guess-input" min="1" max="100">
+        <button id="submit-guess">Submit Guess</button>
+        <p id="result"></p>
+        <p id="attempts">Attempts: 0</p>
+        <button id="new-game">New Game</button>
+    </div>
+
+    <div id="leaderboard">
+        <h2>Leaderboard</h2>
+        <ul id="leaderboard-list"></ul>
+    </div>
+
+    <!-- Firebase SDK (updated for Realtime Database) -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js"></script>
+
+    <script type="module" src="script.js"></script>
 </body>
 </html>
