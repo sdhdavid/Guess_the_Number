@@ -26,6 +26,7 @@ function startNewGame() {
     document.getElementById('attempts').textContent = `Attempts: 0`;
     document.getElementById('result').textContent = '';
     document.getElementById('guess-input').value = '';
+    document.getElementById('name-input-container').style.display = 'none';
     console.log("New game started. Random number:", randomNumber);
 }
 
@@ -43,7 +44,7 @@ function submitGuess() {
 
     if (guess === randomNumber) {
         document.getElementById('result').textContent = `Congratulations! You guessed the number in ${attempts} attempts.`;
-        saveRecord(attempts);
+        document.getElementById('name-input-container').style.display = 'block';
     } else if (guess < randomNumber) {
         document.getElementById('result').textContent = 'Too low! Try again.';
     } else {
@@ -55,14 +56,25 @@ function submitGuess() {
     guessInput.focus();
 }
 
-function saveRecord(attempts) {
+function saveRecord() {
+    const nameInput = document.getElementById('name-input');
+    const name = nameInput.value.trim();
+    
+    if (name === '') {
+        alert('Please enter your name');
+        return;
+    }
+
     const recordsRef = ref(db, 'records');
     push(recordsRef, {
+        name: name,
         attempts: attempts,
         date: new Date().toISOString()
     }).then(() => {
         console.log('Record saved successfully');
         updateLeaderboard();
+        document.getElementById('name-input-container').style.display = 'none';
+        startNewGame();
     }).catch((error) => {
         console.error('Error saving record: ', error);
     });
@@ -84,7 +96,7 @@ function updateLeaderboard() {
             records.sort((a, b) => a.attempts - b.attempts);
             records.forEach((record) => {
                 const li = document.createElement('li');
-                li.textContent = `${record.attempts} attempts - ${new Date(record.date).toLocaleDateString()}`;
+                li.textContent = `${record.name}: ${record.attempts} attempts - ${new Date(record.date).toLocaleDateString()}`;
                 leaderboardList.appendChild(li);
             });
         } else {
@@ -98,6 +110,7 @@ function updateLeaderboard() {
 document.addEventListener('DOMContentLoaded', (event) => {
     document.getElementById('submit-guess').addEventListener('click', submitGuess);
     document.getElementById('new-game').addEventListener('click', startNewGame);
+    document.getElementById('submit-name').addEventListener('click', saveRecord);
     document.getElementById('guess-input').addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {
             submitGuess();
