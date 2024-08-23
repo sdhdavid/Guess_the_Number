@@ -1,83 +1,57 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    margin: 0;
-    padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
 }
 
-.game-container {
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    padding: 2rem;
-    width: 90%;
-    max-width: 400px;
-}
-
-.game-title {
-    color: #333;
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-    text-align: center;
-}
-
-.game-instruction {
-    color: #666;
-    font-size: 1rem;
-    margin-bottom: 1rem;
-    text-align: center;
-}
-
-.game-input-container {
+.container {
     display: flex;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
+    gap: 2rem;
 }
 
-#input {
-    flex-grow: 1;
+#game-container, #leaderboard {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+h1, h2 {
+    color: #333;
+}
+
+input, button {
+    margin-top: 1rem;
     padding: 0.5rem;
     font-size: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
 }
 
-#btn {
+button {
     background-color: #4CAF50;
     color: white;
     border: none;
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
-#btn:hover {
+button:hover {
     background-color: #45a049;
 }
 
-.game-message {
+#result {
     margin-top: 1rem;
     font-weight: bold;
-    color: #333;
-    text-align: center;
 }
 
-@media (max-width: 480px) {
-    .game-container {
-        padding: 1rem;
-    }
-    
-    .game-title {
-        font-size: 1.2rem;
-    }
-    
-    .game-instruction {
-        font-size: 0.9rem;
-    }
+#leaderboard-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#leaderboard-list li {
+    margin-bottom: 0.5rem;
 }

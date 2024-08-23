@@ -23,14 +23,23 @@ let attempts = 0;
 function startNewGame() {
     randomNumber = Math.floor(Math.random() * 100) + 1;
     attempts = 0;
-    document.getElementById('attempts').textContent = `Attempts: ${attempts}`;
+    document.getElementById('attempts').textContent = `Attempts: 0`;
     document.getElementById('result').textContent = '';
     document.getElementById('guess-input').value = '';
+    console.log("New game started. Random number:", randomNumber);
 }
 
 function submitGuess() {
-    const guess = parseInt(document.getElementById('guess-input').value);
+    const guessInput = document.getElementById('guess-input');
+    const guess = parseInt(guessInput.value);
+    
+    if (isNaN(guess) || guess < 1 || guess > 100) {
+        document.getElementById('result').textContent = 'Please enter a valid number between 1 and 100.';
+        return;
+    }
+
     attempts++;
+    console.log(`Attempt ${attempts}: Guessed ${guess}, Actual ${randomNumber}`);
 
     if (guess === randomNumber) {
         document.getElementById('result').textContent = `Congratulations! You guessed the number in ${attempts} attempts.`;
@@ -42,6 +51,8 @@ function submitGuess() {
     }
 
     document.getElementById('attempts').textContent = `Attempts: ${attempts}`;
+    guessInput.value = '';
+    guessInput.focus();
 }
 
 function saveRecord(attempts) {
@@ -84,8 +95,15 @@ function updateLeaderboard() {
     });
 }
 
-document.getElementById('submit-guess').addEventListener('click', submitGuess);
-document.getElementById('new-game').addEventListener('click', startNewGame);
+document.addEventListener('DOMContentLoaded', (event) => {
+    document.getElementById('submit-guess').addEventListener('click', submitGuess);
+    document.getElementById('new-game').addEventListener('click', startNewGame);
+    document.getElementById('guess-input').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            submitGuess();
+        }
+    });
 
-startNewGame();
-updateLeaderboard();
+    startNewGame();
+    updateLeaderboard();
+});
